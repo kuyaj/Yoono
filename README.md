@@ -1,4 +1,4 @@
-# test-project
+Yoono Project
 
 > A Vue.js project
 
