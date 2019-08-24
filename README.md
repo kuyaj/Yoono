@@ -1,6 +1,11 @@
 Yoono Project
 
-> A Vue.js project
+Home
+![yoono_home](https://user-images.githubusercontent.com/22487392/63640979-6c60d900-c6d9-11e9-8697-9679e5d4054b.png)
+
+Search
+![yoono_search](https://user-images.githubusercontent.com/22487392/63640982-7551aa80-c6d9-11e9-813a-bce23eef20f1.png)
+
 
 ## Build Setup
 
@@ -23,5 +28,3 @@ npm run unit
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
