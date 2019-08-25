@@ -2,14 +2,24 @@
   <div id="AddComponent">
     <div v-if="!toggleSearch" class="input">
       <div class="input-field">
-        <input type="text" name="title" id="" placeholder="title" />
+       {{ addItem.title }}
+       {{ addItem.link }}
+        <input 
+            v-model="addItem.title"
+            type="text" 
+            name="title"  
+            placeholder="title" />
       </div>
       <div class="input-field">
-        <input type="text" name="link" id="" placeholder="link" />
+        <input 
+            v-model="addItem.link"
+            type="text" 
+            name="link"
+            placeholder="link" />
       </div>
       <div class="input-field">
         <button class="add-button">
-          <i class="tiny round material-icons">add</i>
+          <i @click="funcAddData" class="tiny round material-icons">add</i>
         </button>
       </div>
     </div>
@@ -19,18 +29,47 @@
         <input type="text" name="search" id="" placeholder="search" />
       </div>
       <div class="input-field">
-        <button class="add-button"><i class="material-icons">search</i></button>
+        <button @click="funcSearch"  class="add-button"><i class="material-icons">search</i></button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "AddComponent",
   computed: {
     ...mapState(["toggleSearch"])
+  },
+  data(){
+    return {
+       addItem: []
+    };
+  },
+  methods: {
+    ...mapMutations(["ADD_DATA", "SEARCH_FILTER"]),
+    funcAddData(){
+      function isEmpty(str) {
+        return !str || 0 === str.length
+      }
+      const item  = {
+        category: "test",
+        title: this.addItem.title,
+        link: this.addItem.link
+      };
+
+      if(true){
+        this.ADD_DATA(item);
+        this.addItem.title = "";
+        this.addItem.link = "";
+      } else {
+        alert("Please fill in the blanks!");
+      }
+    },
+    funcSearch(){
+      this.SEARCH_FILTER();
+    }
   }
 };
 </script>

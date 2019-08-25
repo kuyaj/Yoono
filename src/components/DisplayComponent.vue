@@ -1,12 +1,26 @@
 <template>
   <div id="DisplayComponent">
-    <div v-cloak class="display">
-      <ul v-cloak v-for="(item, index) in collections" :key="index">
-        <span class="itemLink" @click="funcOpenNewTab(item.link);">
-          {{ item.title }}</span
-        >
-        <button class="edit">Edit</button>
-      </ul>
+    <div class="display">
+        <div v-cloak v-for="(item, index) in collections" :key="index">
+        <ul v-if="!item.isEditing">
+          <span class="itemLink" @click="funcOpenNewTab(item.link);">
+            {{ item.title }} </span>
+          <button class="edit" @click="funcToggleEditing(item);">Edit</button>
+        </ul>
+        <ul v-else>
+          <span class="input-field">
+            <input
+              type="text"
+              v-model="item.title"
+              @change="funcUpdateItem(item, index);"
+            />
+          </span>
+          <button @click="funcToggleEditing(item, index);" class="cancel">
+            Done
+          </button>
+          <button @click="funcRemoveItem(index);" class="remove">Remove</button>
+        </ul> 
+    </div>
     </div>
   </div>
 </template>
@@ -19,10 +33,16 @@ export default {
     ...mapState(["collections"])
   },
   methods: {
-    ...mapMutations(["FROM_FIREBASE"]),
+    ...mapMutations(["FROM_FIREBASE","REMOVE_DATA","UPDATE_DATA"]),
     funcOpenNewTab(link) {
       var win = window.open(link, "_blank");
       win.focus();
+    },
+    funcToggleEditing(item) {
+      item.isEditing = !item.isEditing;
+    },
+    funcRemoveItem(index) {
+      this.REMOVE_DATA(index);
     }
   },
   mounted() {
@@ -32,6 +52,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Hepta+Slab&display=swap');
 .display {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   border: 1px solid transparent;
@@ -48,15 +69,51 @@ ul li {
   padding: 20px;
   margin-bottom: 8px;
 }
-
 .edit {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   float: right;
   text-transform: uppercase;
-  font-size: 0.8em;
+  font-size: 10px;
   border: none;
-  padding: 3px;
-  color: #ecf0f1;
+  padding: 4px;
+  color: #ffff;
   background: #3498db;
+  border-radius: 10%;
+}
+
+.cancel {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  float: right;
+  text-transform: uppercase;
+  font-size: 10px;
+  border: none;
+  padding: 4px;
+  color: #ffff;
+  background: #2ecc71;
+  border-radius: 10%;
+  margin: 3px;
+}
+.remove {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  float: right;
+  text-transform: uppercase;
+  font-size: 10px;
+  border: none;
+  padding: 4px;
+  color: #ffff;
+  background: #ff4757;
+  border-radius: 10%;
+  margin: 3px;
+}
+
+input[type="text"] {
+ font-family: 'Hepta Slab', serif;
+  font-size: 16px;
+  width: 85%;
+  border: 1px solid #95a5a6;
+  border-radius: 3px;
+  padding: 6px;
+  font-family: inherit;
 }
 
 .itemLink {
