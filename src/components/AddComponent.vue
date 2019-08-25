@@ -2,8 +2,6 @@
   <div id="AddComponent">
     <div v-if="!toggleSearch" class="input">
       <div class="input-field">
-       {{ addItem.title }}
-       {{ addItem.link }}
         <input 
             v-model="addItem.title"
             type="text" 
