@@ -21,27 +21,13 @@ export default new Vuex.Store({
       this.state.toggleSearch = !this.state.toggleSearch;
     },
     FROM_FIREBASE() {
-      function reverseObject(object) {
-        var newObject = {};
-        var keys = [];
-    
-        for (var key in object) {
-            keys.push(key);
-        }
-    
-        for (var i = keys.length - 1; i >= 0; i--) {
-            var value = object[keys[i]];
-            newObject[keys[i]]= value;
-        }       
-    
-        return newObject;
-      }
+     
       firebase
         .database()
         .ref("yonno")
         .on("value", snapShot => {
           this.state.collectionCount = snapShot.numChildren() + " items";
-          this.state.collections = reverseObject(snapShot.val());
+          this.state.collections = snapShot.val();
         });
     },
     ADD_DATA(state, item){
@@ -64,8 +50,13 @@ export default new Vuex.Store({
         return false;
       }
     },
-    UPDATE_DATA(state, item) {
-      state.db.ref("/yonno/" + item.key).set(item.value);
+    UPDATE_DATA(state, { item, index }) {
+      state.db.ref('/yonno/'+index).set({
+          title: item.title,
+          link: item.link,
+          category: item.category,
+          isEditing: false
+      });
     },
     SEARCH_FILTER(state, { child, keyword }) {
       state.db

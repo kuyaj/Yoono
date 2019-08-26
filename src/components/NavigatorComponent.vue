@@ -54,7 +54,8 @@ export default {
   border: 1px solid transparent;
   display: flex;
   justify-content: space-between;
-  background: #ffff;
+  background: linear-gradient(to right, #051937, #33265c, #6e2a75, #ae217c, #eb1270);
+  color: #fafafa;
 }
 .navigator-brand {
   margin: 9px;

@@ -4,18 +4,18 @@
         <div v-cloak v-for="(item, index) in collections" :key="index">
         <ul v-if="!item.isEditing">
           <span class="itemLink" @click="funcOpenNewTab(item.link);">
-            {{ item.title }} </span>
+            {{ item.title }}  </span>
           <button class="edit" @click="funcToggleEditing(item);">Edit</button>
         </ul>
         <ul v-else>
           <span class="input-field">
-            <input
+            <input  
               type="text"
               v-model="item.title"
               @change="funcUpdateItem(item, index);"
             />
           </span>
-          <button @click="funcToggleEditing(item, index);" class="cancel">
+          <button @click="funcToggleEditing(item);" class="cancel">
             Done
           </button>
           <button @click="funcRemoveItem(index);" class="remove">Remove</button>
@@ -43,6 +43,9 @@ export default {
     },
     funcRemoveItem(index) {
       this.REMOVE_DATA(index);
+    },
+    funcUpdateItem(item, index) {
+      this.UPDATE_DATA({item, index});
     }
   },
   mounted() {
