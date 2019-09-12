@@ -1,6 +1,8 @@
 <template>
   <div id="HomeComponent">
-    <NavigatorComponent /> <AddComponent /> <DisplayComponent />
+    <NavigatorComponent /> 
+    <AddComponent /> 
+    <DisplayComponent />
   </div>
 </template>
 

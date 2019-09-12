@@ -4,7 +4,7 @@
         <div v-cloak v-for="(item, index) in collections" :key="index">
         <ul v-if="!item.isEditing">
           <span class="itemLink" @click="funcOpenNewTab(item.link);">
-            {{ item.title }}  </span>
+            {{ item.title }} </span>
           <button class="edit" @click="funcToggleEditing(item);">Edit</button>
         </ul>
         <ul v-else>
@@ -30,7 +30,7 @@ import { mapState, mapMutations } from "vuex";
 export default {
   name: "DisplayComponent",
   computed: {
-    ...mapState(["collections"])
+    ...mapState(["collections"]),
   },
   methods: {
     ...mapMutations(["FROM_FIREBASE","REMOVE_DATA","UPDATE_DATA"]),

@@ -2,10 +2,11 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import firebase from "./firebaseConfig";
+import { object_array_reverse } from "./helper_function"
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+export default new Vuex.Store({ 
   state: {
     db: firebase.database(),
     toggleSearch: true,
@@ -20,14 +21,13 @@ export default new Vuex.Store({
     TOGGLE_SEARCH() {
       this.state.toggleSearch = !this.state.toggleSearch;
     },
-    FROM_FIREBASE() {
-     
-      firebase
-        .database()
+    FROM_FIREBASE(state) {
+      state
+        .db
         .ref("yonno")
         .on("value", snapShot => {
           this.state.collectionCount = snapShot.numChildren() + " items";
-          this.state.collections = snapShot.val();
+          this.state.collections = object_array_reverse(snapShot.val());
         });
     },
     ADD_DATA(state, item){

@@ -1,6 +1,6 @@
 <template>
   <div id="AddComponent">
-    <div v-if="!toggleSearch" class="input">
+    <div v-if="toggleSearch" class="input">
       <div class="input-field">
         <input 
             v-model="addItem.title"
@@ -24,10 +24,11 @@
 
     <div v-else class="input">
       <div class="input-field">
-        <input type="text" name="search" id="" placeholder="search" />
+        <input type="text" name="search" v-model="keyword" id="" placeholder="search" />
+        {{ keyword }}
       </div>
       <div class="input-field">
-        <button @click="funcSearch"  class="add-button"><i class="material-icons">search</i></button>
+        <button @click="funcSearch" class="add-button"><i class="material-icons">search</i></button>
       </div>
     </div>
   </div>
@@ -42,7 +43,8 @@ export default {
   },
   data(){
     return {
-       addItem: []
+       addItem: [],
+       keyword: ""
     };
   },
   methods: {
@@ -66,7 +68,7 @@ export default {
       }
     },
     funcSearch(){
-      this.SEARCH_FILTER();
+      //
     }
   }
 };
