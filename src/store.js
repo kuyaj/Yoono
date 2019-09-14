@@ -2,7 +2,12 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import firebase from "./firebaseConfig";
-import { object_array_reverse } from "./helper_function"
+import { getDataFromFirebase, 
+         addDataToFirebase, 
+         updateDataFromFirebase,
+         removeDataFromFirebase,
+         filterDataFromFirebase
+        } from "./helper_function"
 
 Vue.use(Vuex);
 
@@ -22,51 +27,19 @@ export default new Vuex.Store({
       this.state.toggleSearch = !this.state.toggleSearch;
     },
     FROM_FIREBASE(state) {
-      state
-        .db
-        .ref("yonno")
-        .on("value", snapShot => {
-          this.state.collectionCount = snapShot.numChildren() + " items";
-          this.state.collections = object_array_reverse(snapShot.val());
-        });
+      getDataFromFirebase(state)
     },
     ADD_DATA(state, item){
-      const { title, link, category } = item;
-       state.db.ref("/yonno/").push({
-        title: title,
-        isEditing: false,
-        link: link,
-        category: category,
-      })
+      addDataToFirebase(state, item);
     },
-    REMOVE_DATA(state, index) {
-      var answer = confirm("Do you really want to delete this data?");
-      if (answer == true) {
-        state.db.ref("/yonno/" + index).remove();
-        alert("Data is now deleted.");
-        return true;
-      } else {
-        alert("Delete canceled.");
-        return false;
-      }
+    REMOVE_DATA(state, key) {
+      removeDataFromFirebase(state, key);
     },
-    UPDATE_DATA(state, { item, index }) {
-      state.db.ref('/yonno/'+index).set({
-          title: item.title,
-          link: item.link,
-          category: item.category,
-          isEditing: false
-      });
+    UPDATE_DATA(state, { item, key }) {
+      updateDataFromFirebase(state, item, key);
     },
     SEARCH_FILTER(state, { child, keyword }) {
-      state.db
-        .ref("/yonno")
-        .orderByChild(child)
-        .startAt(keyword)
-        .endAt(keyword.concat("\uf8ff"))
-        .on("value", snap => {
-          state.collections = snap.val();
-        });
+      filterDataFromFirebase(state, { child, keyword});
     }
   }
 });

@@ -1,7 +1,7 @@
 <template>
   <div id="DisplayComponent">
     <div class="display">
-        <div v-cloak v-for="(item, index) in collections" :key="index">
+        <div v-cloak v-for="item in collections" :key="item.key">
         <ul v-if="!item.isEditing">
           <span class="itemLink" @click="funcOpenNewTab(item.link);">
             {{ item.title }} </span>
@@ -12,13 +12,13 @@
             <input  
               type="text"
               v-model="item.title"
-              @change="funcUpdateItem(item, index);"
+              @change="funcUpdateItem(item, item.key);"
             />
           </span>
           <button @click="funcToggleEditing(item);" class="cancel">
             Done
           </button>
-          <button @click="funcRemoveItem(index);" class="remove">Remove</button>
+          <button @click="funcRemoveItem(item.key);" class="remove">Remove</button>
         </ul> 
     </div>
     </div>
@@ -44,8 +44,8 @@ export default {
     funcRemoveItem(index) {
       this.REMOVE_DATA(index);
     },
-    funcUpdateItem(item, index) {
-      this.UPDATE_DATA({item, index});
+    funcUpdateItem(item, key) {
+      this.UPDATE_DATA({item, key});
     }
   },
   mounted() {

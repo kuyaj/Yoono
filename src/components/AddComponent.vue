@@ -54,7 +54,8 @@ export default {
         return !str || 0 === str.length
       }
       const item  = {
-        category: "test",
+        // becomes this.addItem.category if category component is created.
+        category: "Others",
         title: this.addItem.title,
         link: this.addItem.link
       };
@@ -66,9 +67,6 @@ export default {
       } else {
         alert("Please fill in the blanks!");
       }
-    },
-    funcSearch(){
-      //
     }
   }
 };
