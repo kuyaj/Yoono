@@ -16,6 +16,14 @@
             placeholder="link" />
       </div>
       <div class="input-field">
+        <select v-model="category">
+          <option disabled>Choose category</option>
+          <option v-for="option in categoryOptions" :key="option.value">
+            {{ option.value }}
+          </option>
+        </select>
+      </div>
+      <div class="input-field">
         <button class="add-button">
           <i @click="funcAddData" class="tiny round material-icons">add</i>
         </button>
@@ -44,8 +52,20 @@ export default {
   data(){
     return {
        addItem: [],
-       keyword: ""
-    };
+       keyword: "",
+       category:"Writing",
+       categoryOptions: [
+            { value: "Writing"},
+            { value: "Foreign Language"},
+            { value: "WWWH Questions"},
+            { value: "Entertainment"},
+            { value : "Programming Tools"},
+            { value: "Programming Articles"},
+            { value: "Astrology"},
+            { value: "Politics"},
+            { value: "Others"}
+          ]
+    }
   },
   methods: {
     ...mapMutations(["ADD_DATA", "SEARCH_FILTER"]),
@@ -54,8 +74,7 @@ export default {
         return !str || 0 === str.length
       }
       const item  = {
-        // becomes this.addItem.category if category component is created.
-        category: "Others",
+        category: this.category,
         title: this.addItem.title,
         link: this.addItem.link
       };
@@ -90,6 +109,15 @@ export default {
   font-size: 16px;
   padding: 20px;
   box-shadow: 0 2px 2px lightgrey;
+}
+.input-field select {
+  width: 100%;
+  border: 1px solid transparent;
+  font-size: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 2px lightgrey;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .input-field .add-button {

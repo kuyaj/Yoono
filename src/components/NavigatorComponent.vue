@@ -1,9 +1,9 @@
 <template>
   <div id="NavigatorComponent">
     <div class="navigator">
-      <div class="navigator-brand">{{ brand_name }}</div>
+      <div class="navigator-brand">{{ getCount }}</div>
       <div class="navigator-name">{{ credentials.username }}</div>
-      <div class="navigator-count">{{ collectionCount }}</div>
+      <div class="navigator-count">{{ brand_name }}</div>
     </div>
     <div class="navigator navigator-menu">
       <div class="navigator-item"><i class="material-icons">whatshot</i></div>
@@ -12,7 +12,6 @@
           <i class="material-icons">lock_open</i>
         </router-link>
       </div>
-
       <div>
         <div
           @click="funcToggleSearch"
@@ -30,7 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapGetters } from "vuex";
 export default {
   name: "NavigatorComponent",
   data() {
@@ -39,7 +38,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(["toggleSearch", "collectionCount", "credentials"])
+    ...mapState(["toggleSearch", "credentials"]),
+    ...mapGetters(["getCount"])
   },
   methods: {
     ...mapMutations(["TOGGLE_SEARCH"]),

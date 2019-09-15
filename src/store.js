@@ -2,25 +2,25 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import firebase from "./firebaseConfig";
-import { getDataFromFirebase, 
-         addDataToFirebase, 
-         updateDataFromFirebase,
-         removeDataFromFirebase,
-         filterDataFromFirebase
-        } from "./helper_function"
+import { getDataFromFirebase, updateDataFromFirebase, filterDataFromFirebase } from "./helper_function";
 
+import { removeDataFromFirebase, addDataToFirebase } from './firebaseFunctions';
 Vue.use(Vuex);
 
 export default new Vuex.Store({ 
   state: {
     db: firebase.database(),
     toggleSearch: true,
-    collectionCount: "",
     credentials: {
       username: "angelo",
       password: "09109117485"
     },
     collections: []
+  },
+  getters: {
+    getCount(state){
+      return state.collections.length;
+    }
   },
   mutations: {
     TOGGLE_SEARCH() {

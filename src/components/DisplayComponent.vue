@@ -41,8 +41,8 @@ export default {
     funcToggleEditing(item) {
       item.isEditing = !item.isEditing;
     },
-    funcRemoveItem(index) {
-      this.REMOVE_DATA(index);
+    funcRemoveItem(key) {
+      this.REMOVE_DATA(key);
     },
     funcUpdateItem(item, key) {
       this.UPDATE_DATA({item, key});

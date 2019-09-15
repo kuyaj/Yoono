@@ -16,24 +16,12 @@ let object_array_reverse = (data) => {
 
 let getDataFromFirebase = (state) => {
     state.db.ref('yonno').on('value', snapShot => {
-        state.collectionCount = snapShot.numChildren() + " items";
         state.collections = object_array_reverse(snapShot.val())
     })
 }
 
-let addDataToFirebase = (state, item) => {
-    const { title, link, category } = item;
-    state.db.ref("/yonno/").push({
-     title: title,
-     isEditing: false,
-     link: link,
-     category: category,
-   })
-}
-
 
 let updateDataFromFirebase = (state, item, key) => {
-    // frankly key here is rendundant because key is within item.key
     let { title, link, category } = item;
     state.db.ref('/yonno/'+key).set({
         title: title,
@@ -42,17 +30,7 @@ let updateDataFromFirebase = (state, item, key) => {
         isEditing: false
     })
 
-let removeDataFromFirebase = (state, key) => {
-    var answer = confirm("Do you really want to delete this data?");
-    if (answer == true) {
-      state.db.ref("/yonno/" + key).remove();
-      alert("Data is now deleted.");
-      return true;
-    } else {
-      alert("Delete canceled.");
-      return false;
-    }
-}
+
 
 let filterDataFromFirebase = (state, { child, keyword }) => {
     state.db
@@ -68,11 +46,8 @@ let filterDataFromFirebase = (state, { child, keyword }) => {
 
 }
 
-
-export { 
-        getDataFromFirebase, 
-        addDataToFirebase,
-        updateDataFromFirebase,
-        removeDataFromFirebase,
-        filterDataFromFirebase
-    }
+export {   
+    getDataFromFirebase,
+    updateDataFromFirebase,
+    addDataToFirebase
+}
