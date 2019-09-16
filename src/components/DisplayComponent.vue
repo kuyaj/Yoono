@@ -1,7 +1,7 @@
 <template>
   <div id="DisplayComponent">
     <div class="display">
-        <div v-cloak v-for="item in collections" :key="item.key">
+        <div v-cloak v-for="item in filter_collections" :key="item.key">
         <ul v-if="!item.isEditing">
           <span class="itemLink" @click="funcOpenNewTab(item.link);">
             {{ item.title }} </span>
@@ -15,6 +15,15 @@
               @change="funcUpdateItem(item, item.key);"
             />
           </span>
+          <span>
+          </span>
+          <span>
+            <input 
+                type="text" 
+                v-model="item.category"
+                @change="funcUpdateItem(item, item.key)"
+              >
+          </span>
           <button @click="funcToggleEditing(item);" class="cancel">
             Done
           </button>
@@ -26,11 +35,28 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters} from "vuex";
 export default {
   name: "DisplayComponent",
+  data(){
+    return {
+      category:"Writing",
+      categoryOptions: [
+        { value: "Writing"},
+        { value: "Foreign Language"},
+        { value: "WWWH Questions"},
+        { value: "Entertainment"},
+        { value : "Programming Tools"},
+        { value: "Programming Articles"},
+        { value: "Astrology"},
+        { value: "Politics"},
+        { value: "Others"}
+        ]
+    }
+  },
   computed: {
     ...mapState(["collections"]),
+    ...mapGetters(["filter_collections"])
   },
   methods: {
     ...mapMutations(["FROM_FIREBASE","REMOVE_DATA","UPDATE_DATA"]),
@@ -112,7 +138,7 @@ ul li {
 input[type="text"] {
  font-family: 'Hepta Slab', serif;
   font-size: 16px;
-  width: 85%;
+  width: 40%;
   border: 1px solid #95a5a6;
   border-radius: 3px;
   padding: 6px;

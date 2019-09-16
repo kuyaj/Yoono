@@ -2,9 +2,11 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import firebase from "./firebaseConfig";
-import { getDataFromFirebase, updateDataFromFirebase, filterDataFromFirebase } from "./helper_function";
-
-import { removeDataFromFirebase, addDataToFirebase } from './firebaseFunctions';
+import {  
+  getDataFromFirebase, 
+  removeDataFromFirebase, 
+  addDataToFirebase, 
+  updateDataFromFirebase } from './firebaseFunctions';
 Vue.use(Vuex);
 
 export default new Vuex.Store({ 
@@ -15,14 +17,32 @@ export default new Vuex.Store({
       username: "angelo",
       password: "09109117485"
     },
-    collections: []
+    collections: [],
+    search_keyword: ""
   },
   getters: {
     getCount(state){
       return state.collections.length;
+    },
+    filter_collections(state){
+      return state.collections.filter((x) => x.title.match(new RegExp(state.search_keyword, "i")));
+    }
+  },
+  actions: {
+    changeName({commit, getters},name){
+      commit("CHANGE_NAME", name);
+    },
+    mutateKeyword({commit}, keyword){
+      commit("MUTATE_KEYWORD", keyword);
     }
   },
   mutations: {
+    MUTATE_KEYWORD(state, keyword) {
+        state.search_keyword = keyword;
+    },
+    CHANGE_NAME(state, name){
+      state.credentials.username = name;
+    },
     TOGGLE_SEARCH() {
       this.state.toggleSearch = !this.state.toggleSearch;
     },
@@ -37,9 +57,6 @@ export default new Vuex.Store({
     },
     UPDATE_DATA(state, { item, key }) {
       updateDataFromFirebase(state, item, key);
-    },
-    SEARCH_FILTER(state, { child, keyword }) {
-      filterDataFromFirebase(state, { child, keyword});
     }
   }
 });

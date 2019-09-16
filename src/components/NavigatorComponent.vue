@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from "vuex";
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "NavigatorComponent",
   data() {
@@ -43,10 +43,15 @@ export default {
   },
   methods: {
     ...mapMutations(["TOGGLE_SEARCH"]),
+    ...mapActions(["changeName"]),
     funcToggleSearch() {
       this.TOGGLE_SEARCH();
     }
+  },
+  mounted(){
+    this.changeName("Sejun");
   }
+
 };
 </script>
 <style scoped>

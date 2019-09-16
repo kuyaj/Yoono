@@ -46,7 +46,8 @@ let filterDataFromFirebase = (state, { child, keyword }) => {
 
 }
 
-export {   
+export {
+    object_array_reverse,   
     getDataFromFirebase,
     updateDataFromFirebase,
     addDataToFirebase

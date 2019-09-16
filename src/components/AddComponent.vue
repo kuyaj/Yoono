@@ -32,18 +32,14 @@
 
     <div v-else class="input">
       <div class="input-field">
-        <input type="text" name="search" v-model="keyword" id="" placeholder="search" />
-        {{ keyword }}
-      </div>
-      <div class="input-field">
-        <button @click="funcSearch" class="add-button"><i class="material-icons">search</i></button>
+        <input @keyup="searchKeyword" type="text" name="search" v-model="keyword" id="" placeholder="search" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations,mapActions } from "vuex";
 export default {
   name: "AddComponent",
   computed: {
@@ -69,6 +65,10 @@ export default {
   },
   methods: {
     ...mapMutations(["ADD_DATA", "SEARCH_FILTER"]),
+    ...mapActions(["mutateKeyword"]),
+    searchKeyword(){
+      this.mutateKeyword(this.keyword)
+    },
     funcAddData(){
       function isEmpty(str) {
         return !str || 0 === str.length
